@@ -147,7 +147,7 @@ void modifyAt(LinkedList* list, size_t index, int newValue) {
 int getElementAt(const LinkedList* list, size_t index) {
 	if (index < 0 || index >= list->size) {
 		printf("获取的index下标不合法\n");
-		return;
+		return -1;
 	}
 	Node* currentNode = list->next;
 	for (int i = 0; i < index; i++) {
