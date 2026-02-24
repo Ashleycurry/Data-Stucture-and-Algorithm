@@ -46,8 +46,9 @@ size_t getLength(const LinkedList* list) {
 * @param index			指定位置的索引
 * @param element		要插入的元素
 */
-void insertAt(LinkedList* list, size_t index, int element) {
-	if (index < 0 || index > list->size) {
+// 修改点：index 改为 int，比较时强转 list->size
+void insertAt(LinkedList* list, int index, int element) {
+	if (index < 0 || index > (int)list->size) {
 		printf("输入数据的index数据非法\n");
 		return ;
 	}
@@ -60,7 +61,7 @@ void insertAt(LinkedList* list, size_t index, int element) {
 	} else {
 		//插入索引处
 		Node* currentNode = list->next; //指向有数据的首元素
-		for (int i = 0; i<index-1; i++) {
+		for (int i = 0; i < index - 1; i++) {
 			currentNode = currentNode->next;
 		}
 		node->next = currentNode->next;
@@ -76,7 +77,7 @@ void insertAt(LinkedList* list, size_t index, int element) {
 * @param element		要插入的元素
 */
 void insertEnd(LinkedList* list, int element) {
-	insertAt(list, list->size, element);
+	insertAt(list, (int)list->size, element);
 }
 
 /*
@@ -84,8 +85,9 @@ void insertEnd(LinkedList* list, int element) {
 * @param LinkedList 	结构体指针
 * @param index			要删除位置的索引
 */
-int deleteAt(LinkedList* list, size_t index) {
-	if (index < 0 || index >= list->size) {
+// 修改点：index 改为 int，比较时强转 list->size
+int deleteAt(LinkedList* list, int index) {
+	if (index < 0 || index >= (int)list->size) {
 		printf("删除输入的index下标不合法\n");
 		return -1;
 	}
@@ -99,7 +101,7 @@ int deleteAt(LinkedList* list, size_t index) {
 	} else {          
 		//删除中间/结尾结点
 		Node* currentNode = list->next; 
-		for (int i = 0; i < index-1; i++) {
+		for (int i = 0; i < index - 1; i++) {
 			currentNode = currentNode->next;
 		}
 		//currentNode指向要删除节点的前一个节点
@@ -118,7 +120,8 @@ int deleteAt(LinkedList* list, size_t index) {
 * @param index			要删除位置的索引
 */
 int deleteEnd(LinkedList* list) {
-	deleteAt(list, list->size - 1);
+    if (list->size == 0) return -1;
+	return deleteAt(list, (int)list->size - 1);
 }
 
 /*
@@ -127,11 +130,12 @@ int deleteEnd(LinkedList* list) {
 * @param index			要修改位置的索引
 * @param newValue		要修改的新值
 */
-void modifyAt(LinkedList* list, size_t index, int newValue) {
-	if (index < 0 || index >= list->size) {
+// 修改点：index 改为 int，比较时强转 list->size
+void modifyAt(LinkedList* list, int index, int newValue) {
+	if (index < 0 || index >= (int)list->size) {
 		printf("要修改的index下标不合法\n");
-		return -1;
-	}
+		return;
+    }
 	Node* currentNode = list->next;
 	for (int i = 0; i < index; i++) {
 		currentNode = currentNode->next;
@@ -144,8 +148,9 @@ void modifyAt(LinkedList* list, size_t index, int newValue) {
 * @param LinkedList 	结构体指针
 * @param index			要获取位置的索引
 */
-int getElementAt(const LinkedList* list, size_t index) {
-	if (index < 0 || index >= list->size) {
+// 修改点：index 改为 int，比较时强转 list->size
+int getElementAt(const LinkedList* list, int index) {
+	if (index < 0 || index >= (int)list->size) {
 		printf("获取的index下标不合法\n");
 		return -1;
 	}
@@ -162,7 +167,7 @@ int getElementAt(const LinkedList* list, size_t index) {
 * @param LinkedList 	结构体指针
 */
 void getMiddleAt(const LinkedList* list) {
-	int target = getElementAt(list, (list->size - 1) / 2);
+	int target = getElementAt(list, ((int)list->size - 1) / 2);
 	printf("链表中的中间值为 %d\n", target);
 }
 
@@ -172,7 +177,7 @@ void getMiddleAt(const LinkedList* list) {
 * @param k				要查找倒数第k位置
 */
 void getKthFromEnd(const LinkedList* list, int k) {
-	if (list->size == 0 || k > list->size) {
+	if (list->size == 0 || k > (int)list->size) {
 		printf("无效的k值或链表为空\n");
 		return;
 	}
